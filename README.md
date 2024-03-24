@@ -34,3 +34,261 @@ Repositório destinado a anotações de estudo sobre Java, em específico sobre 
 > Cenário Real: Enquanto estiver estudando para a prova é indicado utilizar um editor de texto e compilar o código por linha de comando, isso aumentará a sensiblidade na hora de examinar um trecho de código na prova.
 
 ---
+
+# Entendendo as questões
+
+A maioria das questões terão trechos de código e perguntarão para responder sobre eles. Para essas questões antes de ver outras coisas é necessário se perguntar:
+
+    *Este código compila??*
+
+Parece simples, mas se você saber se um determinado conjunto de códigos compila ou não, responder a pergunta pode ser mais fácil.
+
+> Se todas as alternativas da questão não tiverem a opção que o código não compila, considere um presente. Isso significa que todas as linha compilam e é possivel usar a informação dessa questão para responder outras questões.
+
+## Aplicando o processo de eliminação
+
+Em alguns casos é possivel eliminar alternativas mesmo sem ler a questão, algumas alternativas podem ter erros de declaração, por exemplo. Com isso mesmo se você não souber a resposta a eliminação irá aumentar as suas changes de acertar. Imagine de 5 alternativas conseguir eliminar 3?
+
+## Pular questões difícies
+
+É melhor gastar 10 minutos respondendo 5 questões corretamente do que gastar 10 minutos em uma questão, se não tiver certeza ou a questão for muito difícil deixe para revisar depois no final da prova.
+
+## Fique de olho em questões com palavras fortes
+
+Muitas questões do exame incluem opções de resposta com frases descritivas em vez de linhas de código. Ao ver essas perguntas, tenha cuidado com qualquer opção de resposta que inclua palavras fortes como _"must"_, _"all"_ ou _"cannot"_. Se você pensar nas complexidades de linguagens de programação, é raro que uma regra não tenha exceções ou casos especiais. Portanto, se você estiver preso entre duas respostas e uma delas usar _"must"_ enquanto a outra usar _"can"_ ou _"may"_, é melhor escolher aquele com a palavra mais fraca, pois é mais declaração ambígua.
+
+# Lista de conteúdos da prova
+
+- Handling date, time, text, numeric and boolean values
+  - Use primitives and wrapper classes including Math API, parentheses, type promotion, and casting to evaluate arithmetic and boolean expressions
+  - Manipulate text, including text blocks, using String and StringBuilder classes
+  - Manipulate date, time, duration, period, instant and time-zone objects using Date-Time API
+- Controlling Program Flow
+  - Create program flow control constructs including if/else, switch statements
+    and expressions, loops, and break and continue statements
+- Utilizing Java Object-Oriented Approach
+  - Declare and instantiate Java objects including nested class objects, and explain the object life-cycle including creation, reassigning references, and garbage collection
+    -Create classes and records, and define and use instance and static fields and methods, constructors, and instance and static initializers
+  - Implement overloading, including var-arg methods
+  - Understand variable scopes, use local variable type inference, apply encapsulation, and make objects immutable
+    -Implement polymorphism and differentiate object type versus reference type. Perform type casting, identify object types using instanceof operator and pattern matching
+  - Create and use interfaces, identify functional interfaces, and utilize private, static, and default interface methods
+  - Create and use enumerations with fields, methods and constructors
+- Handling Exceptions
+  - Handle exceptions using try/catch/finally, try-with-resources, and multi-catch blocks, including custom exceptions
+- Working with Arrays and Collections
+  - Create Java arrays, List, Set, Map, and Deque collections, and add, remove,
+    update, retrieve and sort their elements
+- Working with Streams and Lambda expressions
+  - Use Java object and primitive Streams, including lambda expressions
+    implementing functional interfaces, to supply, filter, map, consume,
+    and sort data
+  - Perform decomposition, concatenation and reduction, and grouping and
+    partitioning on sequential and parallel streams
+- Packaging and deploying Java code and use the Java Platform
+  Module System
+  - Define modules and their dependencies, expose module content including for reflection. Define services, producers, and consumers
+  - Compile Java code, produce modular and non-modular jars, runtime images, and implement migration using unnamed and automatic modules
+- Managing concurrent code execution
+  - Create worker threads using Runnable and Callable, manage the thread lifecycle, including automations provided by different Executor services and concurrent API
+  - Develop thread-safe code, using different locking mechanisms and concurrent API
+  - Process Java collections concurrently including the use of parallel streams
+- Using Java I/O API
+  - Read and write console and file data using I/O Streams
+  - Serialize and de-serialize Java objects
+  - Create, traverse, read, and write Path objects and their properties using
+    java.nio.file API
+- Accessing databases using JDBC
+  - Create connections, create and execute basic, prepared and callable statements, process query results and control transactions using JDBC API
+- Implementing Localization
+  - Implement localization using locales, resource bundles, parse and
+    format messages, dates, times, and numbers including currency and
+    percentage values
+
+# Handling date, time, text, numeric and boolean values and Utilizing Java Object-Oriented Approach
+
+Nessa seção vamos aprender sobre o básico da java.
+
+## Principais componentes do Java
+
+A JDK (Java Development Kit) contém o mínimo para desenvolver em Java. Os comandos principais incluem:
+
+- _javac_ : Converte código .java em arquivos .class bytecode
+- _java_ : Executa o programa
+- _jar_ : Faz o package dos arquivos
+- _javadoc_ : Gera a documentação
+
+## Entendendo a estrutura da classe
+
+Classes em Java são os blocos básicos de construção de programas. Elas descrevem as partes e características fundamentais de um programa. Além das classes, há outros blocos de construção como interfaces, records e enums. Para usar classes, é necessário criar objetos, que são instâncias em tempo de execução das classes na memória. Os objetos representam o estado do programa e são referidos como instâncias. As referências são variáveis que apontam para objetos.
+
+## Campos e Métodos
+
+As classes Java possuem dois elementos primários: _métodos_ mais chamados de funções e _campos_ mais conhecidos como variáveis. Eles são chamados de _membros_ da classe. Variáveis guardam o estado do programa e os métodos operam nesse estado.
+
+Um exemplo simples de classe Java seria assim:
+
+```java
+public class Animal {
+}
+```
+
+Uma palavra que possui um significado especial se chama _keyword_, no exemplo a cima são as palavras _public_ e _class_.
+
+```java
+public class Animal {
+  String name;
+}
+```
+
+Agora adicionamos o campo do tipo **String** e com o nome **name**.
+
+```java
+public class Animal {
+  String name;
+  public String getName() {
+    return name;
+  }
+  public void setName(String newName) {
+    name = newName;
+  }
+}
+```
+
+Agora adicionamos dois métodos à classe. A palavra _public_ significa que o método pode ser chamado por outras classes. Após temos o tipo de retorno que nesse caso é uma **String**.
+No segundo método _setName(String newName)_ temos um tipo especial de retorno, chamado _void_ ele indica que nenhum valor é retornado na verdade. Esse método necessita que quem irá chamá-lo informe uma informação, essa informação se chama _parâmetro_. Isso significa que quem está chamando esse método precisa passar uma _String_ como parâmetro e não deve esperar nada como retorno.
+
+## Classes e arquivos
+
+Na maioria das vezes, cada classe Java é definida em seu próprio arquivo .java. Um tipo de nível superior é uma estrutura de dados que pode ser definida de forma independente dentro de um arquivo. Uma classe de nível superior é frequentemente pública, o que significa que qualquer código pode chamá-la. Curiosamente, o Java não exige que o tipo seja público. Por exemplo, a classe a seguir está correta:
+
+```java
+class Animal {
+  String name;
+}
+```
+
+Você até pode colocar dois tipos no mesmo arquivo. Quando o faz, no máximo um dos tipos de nível superior no arquivo pode ser público. Isso significa que um arquivo contendo o seguinte também está correto:
+
+```java
+public class Animal {
+  private String name;
+}
+class Animal2 {}
+```
+
+Se você tiver um tipo público, ele precisa corresponder ao nome do arquivo. A declaração `public class Animal2` não seria compilada em um arquivo chamado Animal.java.
+
+## Criando um método _main()_
+
+Um programa Java inicia a sua execução através de seu método _main()_.
+A maneira mais simples se declarar um método main seria assim:
+
+```java
+public class Foo {
+  public static void main(String[] args) {
+    System.out.println("Hello World");
+  }
+}
+```
+
+Esse código exibe a mensagem **Hello World** no console. Basta executar o seguinte:
+
+- _javac Foo.java_
+- _java Foo_
+
+As regras para o que um arquivo Java contém e em que ordem são mais detalhadas do que explicamos até agora, mas para simplificar as coisas por enquanto, seguimos este subconjunto das regras:
+
+- Cada arquivo pode conter apenas uma classe pública.
+- O nome do arquivo deve corresponder ao nome da classe, incluindo a caixa, e ter uma extensão .java.
+- Se a classe Java for um ponto de entrada para o programa, ela deve conter um método main() válido.
+
+Vamos primeiro revisar as palavras na assinatura do método _main()_, uma por uma. A palavra-chave public é o que chamamos de **modificador de acesso**. Ele declara o nível de exposição deste método aos possíveis chamadores no programa. Naturalmente, _public_ significa acesso total de qualquer lugar no programa.
+
+A palavra-chave _static_ vincula um método à sua classe, para que possa ser chamado apenas pelo nome da classe, como, por exemplo, _Foo.main()_. O Java não precisa criar um objeto para chamar o método _main()_ - o que é bom. Na verdade, a JVM faz isso, mais ou menos, ao carregar o nome da classe fornecido a ela. Se um método _main()_ não tiver as palavras-chave corretas, você receberá um erro ao tentar executá-lo.
+
+A palavra-chave _void_ representa o tipo de retorno. Um método que não retorna dados devolve o controle silenciosamente ao chamador. Em geral, é uma boa prática usar _void_ para métodos que alteram o estado de um objeto. Nesse sentido, o método _main()_ altera o estado do programa de iniciado para finalizado.
+Finalmente, chegamos à lista de parâmetros do método _main()_, representada como um array de objetos _java.lang.String_. Você pode usar qualquer nome de variável válido junto com qualquer um desses três formatos:
+
+- String[] args
+- String options[]
+- String... friends
+
+O compilador aceita qualquer um desses. O nome da variável args é comum porque sugere que esta lista contém valores que foram lidos (argumentos) quando a JVM foi iniciada. Os caracteres [] são colchetes e representam um array. Um array é uma lista de tamanho fixo de itens que são todos do mesmo tipo. Os caracteres **...** são chamados de varargs (listas de argumentos variáveis).
+
+## Passando parametros para um programa java
+
+O código `args[0]` acessa o primeiro elemento do array. Isso mesmo: os índices de array começam com 0 em Java. Para executá-lo, digite o seguinte:
+
+```
+javac Foo.java
+java Foo Pedro Silva
+```
+
+A saída é o que você poderia esperar:
+
+```
+Pedro
+Silva
+```
+
+# Compilando e rodando código com pacotes
+
+| Passo                     | Windows                      | Mac/Linux                 |
+| ------------------------- | ---------------------------- | ------------------------- |
+| 1.Cria a primeira classe. | C:\temp\packagea\ClassA.java | /tmp/packagea/ClassA.java |
+| 2. Crie a segunda classe. | C:\temp\packageb\ClassB.java | /tmp/packageb/ClassB.java |
+| 3. Entre no diretório.    | cd C:\temp                   | cd /tmp                   |
+
+Agora para compilar basta rodar:
+
+    javac packagea/ClassA.java packageb/ClassB.java
+    ou
+    javac packagea/*.java packageb/*.java
+
+E para rodar o código java:
+
+    java packageb.ClassB
+
+## Compilando em outro diretório
+
+Por padrão o `javac` coloca as classes compiladas no mesmo diretório do codígo fonte, mas é possível alterar isso. A opção -d específica esse diretório de destino.
+
+    javac -d classes packagea/ClassA.java packageb/ClassB.java
+
+Para rodar o programa é preciso específicar o classpath para que o Java saiba onde encontrar as classes. Existem três opções:
+
+    java -cp classes packageb.ClassB
+    java -classpath classes packageb.ClassB
+    java --class-path classes packageb.ClassB
+
+# Criando arquivos JAR
+
+Um arquivo Java (JAR) é como um ZIP mas apenas com arquivos java.
+
+Para criar podemos usar um desses comandos:
+
+    jar -cvf myNewFile.jar .
+    jar --create --verbose --file myNewFile.jar .
+
+E para compilar:
+
+Windows:
+
+    java -cp ".;C:\temp\someOtherLocation;c:\temp\myJar.jar" myPackage.MyClass
+
+Linux:
+
+    java -cp ".:/tmp/someOtherLocation:/tmp/myJar.jar" myPackage.MyClass
+
+O (.) indica que você quer incluir o diretório atual no _classpath_, o (;) é usado para separar partes do _classpath_.
+
+# Ordem de elementos para declarar uma classe
+
+| Element                               | Example                | Required? | Where does it go?                                                     |
+| ------------------------------------- | ---------------------- | --------- | --------------------------------------------------------------------- |
+| Declaração Package                    | `package abc; `        | Não       | Primeira linha do arquivo (excluindo comentários ou linhas em branco) |
+| declarações imports                   | `import java.util.\*;` | Não       | Logo após o package (Se presente)                                     |
+| Declarações de tipo de nível superior | `public class C`       | Sim       | Logo após o import (se existir)                                       |
+| Declarações de campos                 | `int value;`           | Não       | Qualquer elemento de nível superior dentro de uma classe              |
+| Declarações de métodos                | `void method()`        | Não       | Qualquer elemento de nível superior dentro de uma classe              |
