@@ -292,3 +292,242 @@ O (.) indica que você quer incluir o diretório atual no _classpath_, o (;) é 
 | Declarações de tipo de nível superior | `public class C`       | Sim       | Logo após o import (se existir)                                       |
 | Declarações de campos                 | `int value;`           | Não       | Qualquer elemento de nível superior dentro de uma classe              |
 | Declarações de métodos                | `void method()`        | Não       | Qualquer elemento de nível superior dentro de uma classe              |
+
+# Criando Objetos
+
+## Chamando construtores
+
+- Para criar uma instancia de uma classe é preciso apenas digitar a palavra `new` antes do nome da classe e adicionar parênteses depois.
+
+```java
+Foo f = new Foo();
+```
+
+Primeiro você declara o tipo que você irá criar (Foo) depois adiciona um nome a variável (f) e então você escreve `new Foo()` para realmente criar o objeto.
+`Foo()` se parece com um método, mas é chamado de construtor que é um tipo de método especial para criar novos objetos.
+
+```java
+public class Foo {
+  public Foo(){
+    System.out.println("Sou um construtor");
+  }
+}
+```
+
+Diferente desse exemplo que podemos ver no exame de certificação:
+
+```java
+public class Foo {
+  public void Foo(){} //Isso não é um construtor
+}
+```
+
+Um construtor nunca terá um tipo de retorno, pois o propósito principal dele é inicializar campos.
+
+# Blocos Inicializadores de Instância
+
+- São representados por chaves `{ }` e ficam fora dos métodos.
+
+```java
+  public class Dog {
+    public static void main(String[] args){
+      { System.out.println("Quero brincar!") }
+    }
+    { System.out.println("Olá humano!") }
+  }
+
+```
+
+# Ordem de inicialização
+
+- Campos e blocos inicializadores de instância são executados na ordem que cada um aparece no arquivo.
+- o construtor roda depois de todos os campos e blocos inicializadores de instância.
+
+# Usando tipos primitivos
+
+- Os tipos tipos primitivos são:
+
+| Keyword | Type                        | Min value      | Max value     | Default value | Example |
+| ------- | --------------------------- | -------------- | ------------- | ------------- | ------- |
+| boolean | true or false               | n/a            | n/a           | false         | true    |
+| byte    | 8-bit integral value        | -128           | 127           | 0             | 123     |
+| short   | 16-bit integral value       | -32,768        | 32,767        | 0             | 123     |
+| int     | 32-bit integral value       | -2,147,483,648 | 2,147,483,647 | 0             | 123     |
+| long    | 64-bit integral value       | -2^63          | 2^63 – 1      | 0L            | 123L    |
+| float   | 32-bit floating-point value | n/a            | n/a           | 0.0f          | 123.45f |
+| double  | 64-bit floating-point value | n/a            | n/a           | 0.0           | 123.456 |
+| char    | 16-bit Unicode value        | 0              | 65,535        | \u0000        | 'a'     |
+
+- _Signed_ e _Unsigned_
+
+  Você deve estar ciente de que short e char estão intimamente relacionados, pois ambos são armazenados como tipos integrais com o mesmo comprimento de 16 bits. A principal diferença é que short
+  é _signed_, o que significa que divide seu intervalo entre inteiros positivos e negativos. Alternativamente, char não tem sinal, o que significa que seu intervalo é estritamente positivo, incluindo 0.
+
+# Classes Wrapper
+
+Cada tipo primitivo possui uma classe wrapper, que é um objeto que corresponde com um primitivo:
+
+| Primitive type | Wrapper class | Wrapper class inherits Number? | Example of creating        |
+| -------------- | ------------- | ------------------------------ | -------------------------- |
+| boolean        | Boolean       | No                             | Boolean.valueOf(true)      |
+| byte           | Byte          | Yes                            | Byte.valueOf((byte) 1)     |
+| short          | Short         | Yes                            | Short.valueOf((short) 1)   |
+| int            | Integer       | Yes                            | Integer.valueOf(1)         |
+| long           | Long          | Yes                            | Long.valueOf(1)            |
+| float          | Float         | Yes                            | Float.valueOf((float) 1.0) |
+| double         | Double        | Yes                            | Double.valueOf(1.0)        |
+| char           | Character     | No                             | Character.valueOf('c')     |
+
+# Identificando _identifiers_
+
+Um _identifier_ é um nome de variável, método, classe, interface ou pacote. As regras para a declareção deles são as seguintes:
+
+- Os identificadores devem começar com uma letra, um símbolo de moeda ou um símbolo \_. Símbolos monetários
+  incluem dólar ($), yuan (¥), euro (€) e assim por diante.
+- Os identificadores podem incluir números, mas não começar com eles.
+- Um único sublinhado \_ não é permitido como identificador.
+- Não é possível usar o mesmo nome de uma palavra reservada Java. Uma palavra reservada é especial palavra que o Java deixou de lado para que você não tenha permissão para usá-la. Lembre-se que Java diferencia maiúsculas de minúsculas, portanto, você pode usar versões das palavras-chave que diferem apenas em maiúsculas e minúsculas. Por favor, não use.
+
+Exemplos legais:
+
+```java
+long okidentifier;
+float $OK2Identifier;
+boolean _alsoOK1d3ntifi3r;
+char __SStillOkbutKnotsonice$;
+```
+
+Exemplos não legais:
+
+```java
+int 3DPointClass; // identifiers cannot begin with a number
+byte hollywood@vine; // @ is not a letter, digit, $ or _
+String *$coffee; // * is not a letter, digit, $ or _
+double public; // public is a reserved word
+short _; // a single underscore is not allowed
+```
+
+# Declarando e inicializando múltiplas variáveis
+
+Exemplo correto:
+
+```java
+void sandFence() {
+ String s1, s2;
+ String s3 = "yes", s4 = "no";
+}
+```
+
+Exemplo incorreto:
+
+```java
+int num, String value; // DOES NOT COMPILE
+
+```
+
+# Inferindo Tipo com o _var_
+
+Para usar isso basta digitar _var_ ao invés do tipo primitivo ou tipo por referência.
+
+```java
+  public class Zoo {
+    public void whatTypeAmI() {
+    var name = "Hello";
+    var size = 7;
+    }
+  }
+```
+
+Essa _feature_ se chama, inferência de tipo em variável local. Só é possível usar o _var_ em váriaveis locais.
+O compilador irá inferir o tipo de acordo com o valor colocado na varriável e não pode ser trocado posteriormente.
+Quando o _var_ for utilizado sempre será necessário inicializar a variável.
+
+# Trabalhando com escopo de variável
+
+- Uma vairável nunca pode ter um escopo maior do que o método em que ela está declarada, no entanto elas podem ter um escopo menor.
+
+# Escopo para classes
+
+- Variáveis de instância estão disponíveis assim que são definidas e duram a vida útil do objeto.
+- Variáveis estáticas entram no escopo quando declaradas como o outros tipos de variáveis. No entanto, eles permanecem no escopo durante toda a vida do programa.
+
+# Resumo sobre escopos
+
+- Variáveis ​​locais: No escopo desde a declaração até o final do bloco
+- Parâmetros do método: no escopo durante a duração do método
+- Variáveis ​​de instância: no escopo desde a declaração até que o objeto seja elegível para o _garbage collection_
+- Variáveis ​​de classe: no escopo desde a declaração até o término do programa
+
+# Garbage collector
+
+A coleta de lixo refere-se ao processo de liberação automática de memória no heap, excluindo objetos que não estão mais acessíveis em seu programa.
+
+Um objeto está elegível ao garbage collector quando:
+
+- O objeto não possui mais referências apontando para ele.
+- Todas as referências ao objeto saíram do escopo.
+
+Diferença entre objeto e referência:
+
+    A referência é uma variável que possui um nome e pode ser usada para acessar o conteúdo de um
+    objeto. Uma referência pode ser atribuída a outra referência, passada para um método ou retornada
+    de um método. Todas as referências são do mesmo tamanho, independentemente do tipo.
+    Um objeto fica na pilha e não tem nome. Portanto, você não tem como acessar
+    um objeto, exceto por meio de uma referência. Os objetos vêm em diferentes formas e tamanhos e
+    consomem quantidades variadas de memória. Um objeto não pode ser atribuído a outro objeto e
+    um objeto não pode ser passado para um método ou retornado de um método. É o objeto que é coletado pelo _garbage collector_
+    , não sua referência.
+
+# Resumo
+
+- **Ser capaz de escrever código usando um método main().**
+- Um método main() geralmente é escrito como público estático void principal(String[] args). Os argumentos são referenciados começando com argumentos[0]. Acessar um argumento que não foi passado fará com que o código lance um exceção.
+- **Entenda o efeito do uso de pacotes e importações.**
+- Os pacotes contêm classes Java. As classes podem ser importadas por nome de classe ou curinga. Os curingas não olham para subdiretórios. No caso de um conflito, as importações de nomes de classe têm precedência. Empacotar e importar declarações são opcionais. Se estiverem presentes, ambos vão antes da declaração de classe em essa ordem.
+- **Ser capaz de reconhecer um construtor.**
+- Um construtor tem o mesmo nome da classe. Parece como um método sem tipo de retorno.
+
+- **Ser capaz de identificar declarações e inicialização legais e ilegais.**
+  - Múltiplas variáveis ​​podem ser declarados e inicializados na mesma instrução quando compartilham um tipo. Variáveis ​locais requer uma inicialização explícita; outros usam o valor padrão para esse tipo. Os identificadores podem
+    contêm letras, números, símbolos de moeda ou _, embora não possam começar com números.
+    Além disso, você não pode definir um identificador que seja apenas um caractere de sublinhado _. Numérico
+    literais podem conter sublinhados entre dois dígitos, como 1*000, mas não em outros lugares,
+    como \_100*.0\_.
+- **Entenda como criar blocos de texto.**
+  - Um bloco de texto começa com """ na primeira linha. A próxima linha inicia o conteúdo. A última linha termina com """. Se """ estiver em sua própria linha, uma quebra de linha final está incluída.
+- **Ser capaz de usar var corretamente.**
+  - Um var é usado para uma variável local. Uma var é inicializada no mesma linha onde foi declarado e, embora possa alterar o valor, não pode alterar o tipo. Uma variável não pode ser inicializado com um valor nulo sem um tipo, nem pode ser usado em declarações de múltiplas variáveis.
+- **Ser capaz de determinar onde as variáveis ​​entram e saem do escopo.**
+  - Todas as variáveis ​​entram no escopo quando forem declarados. Variáveis ​​locais saem do escopo quando o bloco em que são declaradas nas pontas. Variáveis ​​de instância saem do escopo quando o objeto é elegível para coleta de lixo.
+    Variáveis ​​de classe permanecem no escopo enquanto o programa estiver em execução.
+- **Saiba como identificar quando um objeto é elegível para coleta de lixo.**
+  - Desenhe um diagrama para acompanhe referências e objetos enquanto rastreia o código. Quando nenhuma seta aponta para uma caixa (objeto), ele é elegível para coleta de lixo.
+
+# Precedência dos Operadores
+
+| Operator                        | Symbols and examples                              | Evaluation    |
+| ------------------------------- | ------------------------------------------------- | ------------- |
+| Post-unary operators            | expression++, expression--                        | Left-to-right |
+| Pre-unary operators             | ++expression, --expression                        | Left-to-right |
+| Other unary operators           | -, !, ~, +, (type)                                | Right-to-left |
+| Cast                            | (Type)reference                                   | Right-to-left |
+| Multiplication/division/modulus | \*, /, %                                          | Left-to-right |
+| Addition/subtraction            | +, -                                              | Left-to-right |
+| Shift operators                 | <<, >>, >>>                                       | Left-to-right |
+| Relational operators            | <, >, <=, >=, instanceof                          | Left-to-right |
+| Equal to/not equal to           | ==, !=                                            | Left-to-right |
+| Logical AND                     | &                                                 | Left-to-right |
+| Logical exclusive OR            | ^                                                 | Left-to-right |
+| Logical inclusive OR            | \|                                                | Left-to-right |
+| Conditional AND                 | &&                                                | Left-to-right |
+| Conditional OR                  | \|\|                                              | Left-to-right |
+| Ternary operators               | boolean expression ? expression1 : expression2    | Right-to-left |
+| Assignment operators            | =, +=, -=, \*=, /=, %=, &=, ^=, =, <<=, >>=, >>>= | Right-to-left |
+| Arrow operator                  | ->                                                | Right-to-left |
+
+# Regras de promoção númerica
+
+1. Se dois valores tiverem tipos de dados diferentes, Java promoverá automaticamente um dos valores para o maior dos dois tipos de dados.
+2. Se um dos valores for integral e o outro for ponto flutuante, Java irá automaticamente promova o valor integral ao tipo de dados do valor de ponto flutuante.
+3. Tipos de dados menores, ou seja, byte, short e char, são primeiro promovidos para int a qualquer momento eles são usados ​​com um operador aritmético binário Java com uma variável (em oposição a um valor), mesmo que nenhum dos operandos seja int.
+4. Após toda a promoção ter ocorrido e os operandos terem o mesmo tipo de dados, o valor resultante terá o mesmo tipo de dados que seus operandos promovidos.
