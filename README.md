@@ -531,3 +531,225 @@ Diferença entre objeto e referência:
 2. Se um dos valores for integral e o outro for ponto flutuante, Java irá automaticamente promova o valor integral ao tipo de dados do valor de ponto flutuante.
 3. Tipos de dados menores, ou seja, byte, short e char, são primeiro promovidos para int a qualquer momento eles são usados ​​com um operador aritmético binário Java com uma variável (em oposição a um valor), mesmo que nenhum dos operandos seja int.
 4. Após toda a promoção ter ocorrido e os operandos terem o mesmo tipo de dados, o valor resultante terá o mesmo tipo de dados que seus operandos promovidos.
+
+# Operadores Lógicos
+
+| Operator             | Example | Description                                                                 |
+| -------------------- | ------- | --------------------------------------------------------------------------- |
+| Logical AND          | a & b   | O valor é verdadeiro somente se ambos os valores forem verdadeiros.         |
+| Logical inclusive OR | c \| d  | O valor é verdadeiro se pelo menos um dos valores for verdadeiro.           |
+| Logical exclusive OR | e ^ f   | O valor é verdadeiro apenas se um valor for verdadeiro e o outro for falso. |
+
+# Operadores de Atribuição Compostos
+
+| Operator                  | Example   | Description                                                                          |
+| ------------------------- | --------- | ------------------------------------------------------------------------------------ |
+| Addition assignment       | a += 5    | Adiciona o valor da direita à variável da esquerda e atribui a soma à variável       |
+| Subtraction assignment    | b -= 0.2  | Subtrai o valor à direita da variável à esquerda e atribui a diferença à variável    |
+| Multiplication assignment | c \*= 100 | Multiplica o valor à direita pela variável à esquerda e atribui o produto à variável |
+| Division assignment       | d /= 4    | Divide a variável à esquerda pelo valor à direita e atribui o quociente à variável   |
+
+# Operadores de incremento e decremento
+
+| Operator       | Example | Description                                     |
+| -------------- | ------- | ----------------------------------------------- |
+| Pre-increment  | ++w     | Aumenta o valor em 1 e retorna o novo valor     |
+| Pre-decrement  | --x     | Diminui o valor em 1 e retorna o novo valor     |
+| Post-increment | y++     | Aumenta o valor em 1 e retorna o valor original |
+| Post-decrement | z--     | Diminui o valor em 1 e retorna o valor original |
+
+---
+
+Formúla para saber o valor quando utilizado o operadot bitwise (~)
+
+```java
+  int value = 3;
+  System.out.println(-1*value - 1); // -4
+```
+
+# Pattern Matching
+
+É uma nova ferramenta usada no bloco _if_ pra reduzir boilerplante no código. Por exemplo:
+
+```java
+  void compareIntegers(Number number) {
+    if(number instanceof Integer) {
+      Integer data = (Integer) number;
+      System.out.print(data.compareTo(5));
+    }
+  }
+```
+
+O cast é necessário nesse caso para podermos utilizar o _compareTo()_. Agora vejamos como fica con o recurso do _Pattern Matching_:
+
+```java
+  void compareIntegers(Number number) {
+    if(number instanceof Integer data) {
+    System.out.print(data.compareTo(5));
+    }
+  }
+```
+
+# Subtypes
+
+O tipo da variável _pattern_ precisa ser um subtipo da variável informado no lado esquerdo da expressão, por exemplo:
+
+```java
+Integer value = 123;
+if(value instanceof Integer) {}
+if(value instanceof Integer data) {} // DOES NOT COMPILE
+```
+
+# Switch
+
+Estrutura:
+
+![alt text](image.png)
+
+Exemplos:
+
+Depois do java 14:
+
+```java
+switch(animal) {
+ case 1,2: System.out.print("Lion");
+ case 3: System.out.print("Tiger");
+ }
+```
+
+Antes do java 14
+
+```java
+switch(animal) {
+ case 1: case 2: System.out.print("Lion");
+ case 3: System.out.print("Tiger");
+ }
+```
+
+Exemplos que não compilam:
+
+```java
+
+switch month { // DOES NOT COMPILE, falta os parênteses no month
+ case 1: System.out.print("January");
+}
+
+switch(month) // DOES NOT COMPILE, não possui as chaves
+ case 1: System.out.print("January");
+
+switch(month) {
+ case 1: 2: System.out.print("January"); // DOES NOT COMPILE, deveria ter uma vírgula entre o 1 e 2;
+}
+```
+
+# Declaração _break_
+
+O _break_ em uma expressão _switch_ é opcional, mas sem ele cada branch (case) seguido do _case_ que corresponde a busca e a declaração _default_ será executado.
+
+Por exemplo, o que será printado chamando printSeason(2):
+
+```java
+  public void printSeason(int month) {
+    switch(month) {
+        case 1, 2, 3: System.out.print("Winter");
+        case 4, 5, 6: System.out.print("Spring");
+        default: System.out.print("Unknown");
+        case 7, 8, 9: System.out.print("Summer");
+        case 10, 11, 12: System.out.print("Fall");
+    }
+  }
+```
+
+Será printado todos os casos: **WinterSpringUnknownSummerFall**
+
+# Tipos de dados suportados pela expressão switch:
+
+- int and Integer
+- byte and Byte
+- short and Short
+- char and Character
+- String
+- enum values
+- var (if the type resolves to one of the preceding types)
+
+# Determinando _case values_ aceitáveis:
+
+Não é qualquer variável ou valor que pode ser usado em uma instrução _case_. Primeiro, os valores em cada instrução _case_ devem ser valores constantes de tempo de compilação do mesmo tipo de dados que o valor do _switch_. Isso significa que você pode usar apenas literais, constantes de enum ou variáveis constantes finais do mesmo tipo de dados.
+
+# Expressão _switch_
+
+Estrutura:
+![alt text](image-1.png)
+
+Exemplo:
+
+```java
+public void printDayOfWeek(int day) {
+  var result = switch(day) {
+    case 0 -> "Sunday";
+    case 1 -> "Monday";
+    case 2 -> "Tuesday";
+    case 3 -> "Wednesday";
+    case 4 -> "Thursday";
+    case 5 -> "Friday";
+    case 6 -> "Saturday";
+    default -> "Invalid value";
+  };
+  System.out.print(result);
+}
+```
+
+Exemplo com múltiplos valores:
+
+```java
+public void printSeason(int month) {
+  switch(month) {
+    case 1, 2, 3 -> System.out.print("Winter");
+    case 4, 5, 6 -> System.out.print("Spring");
+    case 7, 8, 9 -> System.out.print("Summer");
+    case 10, 11, 12 -> System.out.print("Fall");
+  }
+ }
+```
+
+Chamar printSeason(2) imprime o valor único Winter. Desta vez, não precisamos nos preocupar com instruções de quebra, já que apenas uma ramificação é executada.
+
+Regras extras:
+
+- All of the branches of a switch expression that do not throw an exception must return
+  a consistent data type (if the switch expression returns a value).
+- If the switch expression returns a value, then every branch that isn’t an expression must
+  yield a value.
+- A default branch is required unless all cases are covered or no value is returned.
+
+Não é possível retornar tipos de dados incompatíveis ou aleatórios. Por exemplo:
+
+```java
+int measurement = 10;
+int size = switch(measurement) {
+ case 5 -> 1;
+ case 10 -> (short)2;
+ default -> 5;
+ case 20 -> "3"; // DOES NOT COMPILE
+ case 40 -> 4L; // DOES NOT COMPILE
+ case 50 -> null; // DOES NOT COMPILE
+};
+```
+
+# Case Block
+
+Como um bloco normal, um bloco de caso é aquele que é cercado por chaves ({}). Ele também inclui uma instrução yield se a expressão switch retornar um valor. Por exemplo, o seguinte usa uma mistura de expressões de maiúsculas e minúsculas e blocos:
+
+```java
+int fish = 5;
+int length = 12;
+var name = switch(fish) {
+  case 1 -> "Goldfish";
+  case 2 -> {yield "Trout";}
+  case 3 -> {
+  if(length > 10) yield "Blobfish";
+  else yield "Green";
+  }
+  default -> "Swordfish";
+};
+```
