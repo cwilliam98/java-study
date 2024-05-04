@@ -12,7 +12,7 @@ Repositório destinado a anotações de estudo sobre Java, em específico sobre 
 
 - A prova é composta por questões de múltipla escolha
 - Se uma questão tiver mais de uma resposta correta, será específicado quantas alternativas são corretas.
-- Se importe com _imports_ apenas se eles estiverem especícados no código.
+- Se importe com _imports_ apenas se eles estiverem específicados no código.
 
 # Tipos de Questões
 
@@ -23,7 +23,7 @@ Repositório destinado a anotações de estudo sobre Java, em específico sobre 
 - Questões com APIs pouco comuns
   - Podem surgir questões com APIs que não estão listadas nos conteúdos para o exame, então você pode assumir que aquele trecho de código funciona como esperado.
 - Questões com conceitos errados ou pegadinhas
-  - No exame podem haver questões com termos ou conceitos que não fazem o menor sentido, por exemplo diser que uma interface pode herdar de uma classe, em outros casos pode usar uma palavra chave que não existe no Java como _struct_.
+  - No exame podem haver questões com termos ou conceitos que não fazem o menor sentido, por exemplo dizer que uma interface pode herdar de uma classe, em outros casos pode usar uma palavra chave que não existe no Java como _struct_.
 
 ## Como estudar
 
@@ -331,9 +331,9 @@ Um construtor nunca terá um tipo de retorno, pois o propósito principal dele �
 ```java
   public class Dog {
     public static void main(String[] args){
-      { System.out.println("Quero brincar!") }
+      { System.out.println("Olá humano!"); }
     }
-    { System.out.println("Olá humano!") }
+    { System.out.println("Quero brincar!"); }
   }
 
 ```
@@ -753,3 +753,138 @@ var name = switch(fish) {
   default -> "Swordfish";
 };
 ```
+
+# Core APIs
+
+## Concatenação
+
+Regras:
+
+1 - Se ambos os operandos forem numéricos, + significa adição numérica.
+2 - Se um dos operandos for uma String, + significa concatenação.
+3 - A expressão é avaliada da esquerda para a direita
+
+String index:
+
+![alt text](image-2.png)
+
+## Métodos importantes para String
+
+- **length()** = Retorna o tamanho da string, quantidade de caracteres.
+- **charAt(int index)** = permite consultar a cadeia de caracteres para descobrir qual caractere está em um índice específico.
+- **indexOf()** = Examina os caracteres na cadeia de caracteres e localiza o primeiro índice que corresponde ao valor desejado.
+  Assinaturas:
+
+```java
+public int indexOf(int ch)
+public int indexOf(int ch, int fromIndex)
+public int indexOf(String str)
+public int indexOf(String str, int fromIndex)
+```
+
+- **substring()** = também procura caracteres em uma cadeia de caracteres. Ele retorna partes da cadeia de caracteres
+  assinaturas:
+
+```java
+public String substring(int beginIndex)
+public String substring(int beginIndex, int endIndex)
+```
+
+![alt text](image-3.png)
+
+- **equals() e equalsIgnoreCase()** = O método equals() verifica se dois objetos String contêm exatamente os mesmos caracteres na mesma ordem. O método equalsIgnoreCase() verifica se dois objetos String contêm os mesmos caracteres, com a exceção de que ele ignora as maiúsculas e minúsculas dos caracteres.
+
+```java
+public boolean equals(Object obj)
+public boolean equalsIgnoreCase(String str)
+```
+
+- **startsWith(), endsWith() e contains()** = Os métodos startsWith() e endsWith() examinam se o valor fornecido corresponde a parte da String. O método contains() não é tão particular; ele procura correspondências em qualquer lugar na String
+
+```java
+public boolean startsWith(String prefix)
+public boolean endsWith(String suffix)
+public boolean contains(CharSequence charSeq)
+```
+
+- **replace()** = O método replace() faz uma pesquisa simples e substitui na cadeia de caracteres. Há uma versão que usa parâmetros char, bem como uma versão que usa parâmetros CharSequence
+
+```java
+public String replace(char oldChar, char newChar)
+public String replace(CharSequence target, CharSequence replacement)
+```
+
+- **strip(), stripLeading(), stripTrailing(), trim()** = Os métodos strip() e trim() removem o espaço em branco do início e do fim de uma String. Em termos de exame, o espaço em branco consiste em espaços junto com os caracteres t (tabulação) e n (nova linha).
+  o método stripLeading() remove o espaço em branco do início da String e o deixa no final. O método stripTrailing() faz o oposto. Ele remove o espaço em branco do final da String e o deixa no início.
+
+```java
+public String strip()
+public String stripLeading()
+public String stripTrailing()
+public String trim()
+```
+
+- **indent() e striptIndent()** = O método _indent()_ adiciona o mesmo número de espaços em branco ao início de cada linha se você passar um número positivo. Se você passar um número negativo, ele tentará remover esse número de caracteres de espaço em branco do início da linha. Se você passar de zero, o recuo não será alterado. _indent()_ também normaliza caracteres de espaço em branco. O que significa normalizar o espaço em branco, você pergunta? Primeiro, uma quebra de linha é adicionada ao final da cadeia de caracteres, se ainda não estiver lá. Em segundo lugar, todas as quebras de linha são convertidas para o formato \n.
+  O método _stripIndent()_ é útil quando um String foi criado com concatenação em vez de usar um bloco de texto. Ele se livra de todos os espaços em branco incidentais. Isso significa que todas as linhas que não estão em branco são deslocadas para a esquerda para que o mesmo número de caracteres de espaço em branco seja removido de cada linha e o primeiro caractere que permanece não esteja em branco
+
+```java
+public String indent(int numberSpaces)
+public String stripIndent()
+
+```
+
+![alt text](image-4.png)
+
+## Arrays
+
+![alt text](image-5.png)
+
+- Todos são válidos:
+
+```java
+int[] numAnimals;
+int [] numAnimals2;
+int []numAnimals3;
+int numAnimals4[];
+int numAnimals5 [];
+```
+
+A matriz não aloca espaço para os objetos String. Em vez disso, ele aloca espaço para uma referência de onde os objetos são realmente armazenados.
+![alt text](image-6.png)
+
+- **Arrays.binarySearch()**
+  Retornos:
+  ![alt text](image-7.png)
+
+- **compare()**
+
+Retornos:
+
+- A negative number means the first array is smaller than the second.
+- A zero means the arrays are equal.
+- A positive number means the first array is larger than the second
+
+Regras:
+
+- Se ambas as matrizes têm o mesmo comprimento e têm os mesmos valores em cada ponto no mesmo
+  ordem, retorno zero.
+- Se todos os elementos são iguais, mas a segunda matriz tem elementos extras no final,
+  retornar um número negativo.
+- Se todos os elementos forem iguais, mas a primeira matriz tiver elementos extras no final, retorne um
+  número positivo.
+- Se o primeiro elemento que difere for menor na primeira matriz, retorne um número negativo.
+- Se o primeiro elemento que difere for maior na primeira matriz, retorne um número positivo.
+
+O que menor significa??
+
+- null é menor que qualquer outro valor.
+- Para os números, aplica-se a ordem numérica normal.
+- Para cadeias de caracteres, uma é menor se for um prefixo de outra.
+- Para cadeias de caracteres/caracteres, os números são menores do que as letras.
+- Para cadeias de caracteres/caracteres, maiúsculas são menores que minúsculas.
+
+![alt text](image-8.png)
+
+## Diferença de **equals()**, **compare()** e **_mismatch()_**
+
+![alt text](image-9.png)
