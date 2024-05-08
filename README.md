@@ -888,3 +888,92 @@ O que menor significa??
 ## Diferença de **equals()**, **compare()** e **_mismatch()_**
 
 ![alt text](image-9.png)
+
+    O método compare() retorna um inteiro positivo quando as matrizes são diferentes e a primeira é maior. Este é o caso da opção A, uma vez que o elemento no índice 1 vem primeiro em ordem alfabética. Não é o caso da opção C porque o s4 é mais longo ou da opção E porque as matrizes são as mesmas. O método mismatch() retorna um inteiro positivo quando as matrizes são diferentes em um índice de posição 1 ou maior. É o caso das opções B e D, já que a diferença está no índice 1. Não é o caso da opção F porque não há diferença.
+
+# Trabalhando com Datas e Horas
+
+Começando pelo import necessário para usar a nova API de datas do Java:
+
+       import java.time.*; // import time classes
+
+## Criando datas e horas
+
+- LocalDate Contém apenas uma data — sem hora e sem fuso horário. Um bom exemplo de LocalDate é o seu aniversário este ano. É o seu aniversário para um dia inteiro, independentemente da hora que é.
+- LocalTime Contém apenas uma hora — sem data e sem fuso horário. Um bom exemplo de LocalTime é a meia-noite. É meia-noite no mesmo horário todos os dias.
+- LocalDateTime Contém uma data e hora, mas nenhum fuso horário. Um bom exemplo de LocalDateTime é "o golpe da meia-noite na véspera de Ano Novo". A meia-noite de 2 de janeiro não é tão especial, tornando a data relativamente sem importância, e claramente uma hora depois da meia-noite também não é tão especial. -
+- ZonedDateTime Contém data, hora e fuso horário. Um bom exemplo de ZonedDateTime é "uma teleconferência às 9:00 a.m. EST." Se você mora na Califórnia, você terá que acordar muito cedo, já que a chamada é às 6:00 da manhã, horário local!
+
+Você obtém instâncias de data e hora usando um método estático
+
+```java
+System.out.println(LocalDate.now());
+System.out.println(LocalTime.now());
+System.out.println(LocalDateTime.now());
+System.out.println(ZonedDateTime.now());
+```
+
+## Criando uma data sem horas:
+
+```java
+var date1 = LocalDate.of(2022, Month.JANUARY, 20);
+var date2 = LocalDate.of(2022, 1, 20);
+```
+
+As assinaturas do método são as seguintes:
+
+```java
+public static LocalDate of(int year, int month, int dayOfMonth)
+public static LocalDate of(int year, Month month, int dayOfMonth)
+```
+
+## Criando horas sem data:
+
+```java
+var time1 = LocalTime.of(6, 15); // hour and minute
+var time2 = LocalTime.of(6, 15, 30); // + seconds
+var time3 = LocalTime.of(6, 15, 30, 200); // + nanoseconds
+```
+
+As assinaturas do método são as seguintes:
+
+```java
+public static LocalTime of(int hour, int minute)
+public static LocalTime of(int hour, int minute, int second)
+public static LocalTime of(int hour, int minute, int second, int nanos)
+
+```
+
+## Criando horas sem data:
+
+É possível combinar datas e horas em um único objeto:
+
+```java
+var dateTime1 = LocalDateTime.of(2022, Month.JANUARY, 20, 6, 15, 30);
+var dateTime2 = LocalDateTime.of(date1, time1);
+```
+
+As assinaturas do método são as seguintes:
+
+```java
+public static LocalDateTime of(int year, int month,
+ int dayOfMonth, int hour, int minute)
+public static LocalDateTime of(int year, int month,
+ int dayOfMonth, int hour, int minute, int second)
+public static LocalDateTime of(int year, int month,
+ int dayOfMonth, int hour, int minute, int second, int nanos)
+
+// Com a referência para o Month
+
+public static LocalDateTime of(int year, Month month,
+ int dayOfMonth, int hour, int minute)
+public static LocalDateTime of(int year, Month month,
+ int dayOfMonth, int hour, int minute, int second)
+public static LocalDateTime of(int year, Month month,
+ int dayOfMonth, int hour, int minute, int second, int nanos)
+
+ // Com LocalDate e LocalTime
+
+ public static LocalDateTime of(LocalDate date, LocalTime time)
+
+```
